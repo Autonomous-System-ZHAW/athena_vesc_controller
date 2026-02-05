@@ -1,0 +1,11 @@
+.git
+.gitignore
+build/
+install/
+log/
+.vscode/
+*.o
+*.a
+*.so
+CMakeFiles/
+CMakeCache.txt
