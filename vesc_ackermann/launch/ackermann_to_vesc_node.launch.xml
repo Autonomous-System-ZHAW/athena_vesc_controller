@@ -9,8 +9,8 @@
     <param name="speed_to_erpm_gain" value="3793.0" />
     <param name="speed_to_erpm_offset" value="0.0" />
     <!-- <param name="steering_angle_to_servo_gain" value="0.623" /> -->
-    <param name="steering_angle_to_servo_gain_left" value="0.81" />
-    <param name="steering_angle_to_servo_gain_right" value="0.87" />
+    <param name="steering_angle_to_servo_gain_left" value="0.86" />
+    <param name="steering_angle_to_servo_gain_right" value="0.86" />
     <param name="steering_angle_to_servo_offset" value="0.5" />
     <param name="max_steering_angle" value="0.25" />
   </node>
