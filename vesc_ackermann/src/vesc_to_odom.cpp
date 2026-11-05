@@ -64,7 +64,8 @@ VescToOdom::VescToOdom(const rclcpp::NodeOptions & options)
   speed_to_erpm_offset_ = this->declare_parameter<double>("speed_to_erpm_offset", 0.0);
 
   if (use_servo_cmd_) {
-    steering_to_servo_gain_ = this->declare_parameter<double>("steering_angle_to_servo_gain", 0.0);
+    steering_to_servo_gain_left_ = this->declare_parameter<double>("steering_angle_to_servo_gain_left", 0.0);
+    steering_to_servo_gain_right_ = this->declare_parameter<double>("steering_angle_to_servo_gain_right", 0.0);
     steering_to_servo_offset_ = this->declare_parameter<double>("steering_angle_to_servo_offset", 0.0);
     wheelbase_ = this->declare_parameter<double>("wheelbase", 0.0);
   }
@@ -96,14 +97,15 @@ void VescToOdom::vescStateCallback(const VescStateStamped::SharedPtr state)
   }
 
   // convert to engineering units
-  double current_speed = (-state->state.speed - speed_to_erpm_offset_) / speed_to_erpm_gain_;
+  double current_speed = (state->state.speed - speed_to_erpm_offset_) / speed_to_erpm_gain_;
   if (std::fabs(current_speed) < 0.05) {
     current_speed = 0.0;
   }
   double current_steering_angle(0.0), current_angular_velocity(0.0);
   if (use_servo_cmd_) {
-    current_steering_angle =
-      (last_servo_cmd_->data - steering_to_servo_offset_) / steering_to_servo_gain_;
+    double d = last_servo_cmd_->data - steering_to_servo_offset_;
+    current_steering_angle = (d >= 0.0) ? d / steering_to_servo_gain_left_
+                                        : d / steering_to_servo_gain_right_;
     current_angular_velocity = current_speed * tan(current_steering_angle) / wheelbase_;
   }
 

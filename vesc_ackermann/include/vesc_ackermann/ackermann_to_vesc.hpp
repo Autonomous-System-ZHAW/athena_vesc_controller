@@ -50,7 +50,9 @@ private:
   // ROS parameters
   // conversion gain and offset
   double speed_to_erpm_gain_, speed_to_erpm_offset_;
-  double steering_to_servo_gain_, steering_to_servo_offset_;
+  double steering_to_servo_gain_left_, steering_to_servo_gain_right_;
+  double steering_to_servo_offset_;
+  double max_steering_angle_;
 
   /** @todo consider also providing an interpolated look-up table conversion */
 
